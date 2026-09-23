@@ -22,7 +22,7 @@
     .page{position:relative}
     .noise{
       position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:100;
-      background-image:url("noise.svg");
+      background-image:url("/noise.svg");
       mix-blend-mode:multiply;
     }
     .progress{
