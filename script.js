@@ -5,7 +5,7 @@ const SITE_CONFIG = {
 };
 
 function setupWhatsApp(){
-  const link = document.getElementById("whatsappLink");
+  const link = document.getElementById("https://api.whatsapp.com/send/?phone=%2B50431494347&text&type=phone_number&app_absent=0");
   if(!link) return;
 
   const number = SITE_CONFIG.whatsappNumber.replace(/\D/g, "");
