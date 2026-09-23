@@ -1,6 +1,13 @@
-# Impulse Landing — V1.3
+# Impulse Landing — V1.4
 
-V1 conserva el código original y oficial. V1.3 continúa sobre V1.2.
+V1 conserva el código original y oficial. V1.4 continúa sobre V1.3.
+
+## Cambios en V1.4
+
+- Se eliminó completamente el cursor personalizado con el texto “VIEW”.
+- Se restauró el arrastre horizontal del carrusel con mouse y dispositivos táctiles.
+- Se diferencian el arrastre y el clic: arrastrar cambia de proyecto; tocar una tarjeta o su icono abre el sitio.
+- Se conservaron todos los cambios de V1.3.
 
 ## Cambios en V1.3
 

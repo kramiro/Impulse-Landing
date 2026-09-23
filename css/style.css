@@ -1503,3 +1503,15 @@
   .hero-core{top:27%;right:2vw;width:29vw;max-width:130px}
   .core-aura{inset:-24%}
 }
+
+/* V1.4 — native cursor and reliable drag/click separation */
+.cursor{display:none !important}
+.depth-carousel{cursor:grab}
+.depth-carousel.is-dragging{cursor:grabbing}
+.depth-stage{
+  transition:transform .28s var(--ease);
+  will-change:transform;
+}
+.depth-carousel.is-dragging .depth-stage{transition:none}
+.depth-carousel.is-dragging .depth-card{pointer-events:none}
+.depth-card,.depth-open{cursor:pointer}

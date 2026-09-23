@@ -27,7 +27,6 @@ setupWhatsApp();
 
 
   const progress = document.querySelector('.progress');
-  const cursor = document.querySelector('.cursor');
   const process = document.querySelector('.process');
   const processFill = document.querySelector('.process-fill');
   const digital = document.querySelector('.digital');
@@ -46,9 +45,6 @@ setupWhatsApp();
   });
 
   document.addEventListener('mousemove',e=>{
-    cursor.style.left = e.clientX+'px';
-    cursor.style.top = e.clientY+'px';
-
     const r = digital.getBoundingClientRect();
     const x = ((e.clientX-r.left)/r.width)*100;
     const y = ((e.clientY-r.top)/r.height)*100;
@@ -56,24 +52,17 @@ setupWhatsApp();
     digital.style.setProperty('--my', y+'%');
   });
 
-  document.querySelectorAll('.hoverable').forEach(el=>{
-    el.addEventListener('mouseenter',()=>{
-      cursor.classList.add('active');
-      cursor.textContent='VIEW';
-    });
-    el.addEventListener('mouseleave',()=>{
-      cursor.classList.remove('active');
-      cursor.textContent='';
-    });
-  });
-
-
   // Selected Work — 3D / Depth carousel
   const depthCards = [...document.querySelectorAll('.depth-card')];
   const depthDots = [...document.querySelectorAll('.depth-dot')];
   const depthCurrent = document.getElementById('depthCurrent');
   const depthCarousel = document.getElementById('depthCarousel');
+  const depthStage = document.querySelector('.depth-stage');
   let depthIndex = 0;
+  let dragStartX = null;
+  let dragPointerId = null;
+  let isDragging = false;
+  let suppressCardClick = false;
 
   function circularDelta(i, active, total){
     let d = i - active;
@@ -106,6 +95,56 @@ setupWhatsApp();
   document.getElementById('depthPrev')?.addEventListener('click',()=>goDepth(depthIndex - 1));
   document.getElementById('depthNext')?.addEventListener('click',()=>goDepth(depthIndex + 1));
   depthDots.forEach(dot=>dot.addEventListener('click',()=>goDepth(Number(dot.dataset.go))));
+
+  depthCards.forEach(card=>{
+    card.addEventListener('dragstart',e=>e.preventDefault());
+    card.addEventListener('click',e=>{
+      if(!suppressCardClick) return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      suppressCardClick = false;
+    },true);
+  });
+
+  function finishDepthDrag(e, cancelled = false){
+    if(dragStartX === null || (dragPointerId !== null && e.pointerId !== dragPointerId)) return;
+    const dx = e.clientX - dragStartX;
+    const shouldMove = !cancelled && isDragging && Math.abs(dx) > 42;
+
+    if(shouldMove){
+      suppressCardClick = true;
+      goDepth(depthIndex + (dx < 0 ? 1 : -1));
+      setTimeout(()=>{ suppressCardClick = false; },80);
+    }
+
+    depthCarousel?.classList.remove('is-dragging');
+    if(depthStage) depthStage.style.transform = '';
+    dragStartX = null;
+    dragPointerId = null;
+    isDragging = false;
+  }
+
+  depthCarousel?.addEventListener('pointerdown',e=>{
+    if(e.target.closest('button')) return;
+    dragStartX = e.clientX;
+    dragPointerId = e.pointerId;
+    isDragging = false;
+  });
+
+  depthCarousel?.addEventListener('pointermove',e=>{
+    if(dragStartX === null || e.pointerId !== dragPointerId) return;
+    const dx = e.clientX - dragStartX;
+    if(Math.abs(dx) > 7){
+      if(!isDragging) depthCarousel.setPointerCapture?.(e.pointerId);
+      isDragging = true;
+      depthCarousel.classList.add('is-dragging');
+      if(depthStage) depthStage.style.transform = `translateX(${dx * .2}px)`;
+      e.preventDefault();
+    }
+  });
+
+  depthCarousel?.addEventListener('pointerup',e=>finishDepthDrag(e));
+  depthCarousel?.addEventListener('pointercancel',e=>finishDepthDrag(e,true));
   renderDepth();
 
 
