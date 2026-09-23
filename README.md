@@ -1,6 +1,13 @@
-# Impulse Landing — V1.4
+# Impulse Landing — V1.5
 
-V1 conserva el código original y oficial. V1.4 continúa sobre V1.3.
+V1 conserva el código original y oficial. V1.5 continúa sobre V1.4.
+
+## Cambios en V1.5
+
+- Se eliminó el núcleo de impulso y su trayectoria curva.
+- El hero incorpora una lluvia de estrellas fugaces que atraviesa el titular de arriba hacia abajo y se desvanece.
+- La densidad, escala, velocidad y longitud de las estrellas se adaptan a celulares, tablets y computadoras.
+- Se conservaron el carrusel corregido y todos los cambios de V1.4.
 
 ## Cambios en V1.4
 

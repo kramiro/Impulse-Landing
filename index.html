@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<meta content="V1.4" name="version"/>
+<meta content="V1.5" name="version"/>
 <title>Impulse Landing | Landing Pages, Identidad y Presencia Digital</title>
 <meta content="Diseñamos landing pages, identidades de marca y presencia digital para negocios que quieren verse profesionales y avanzar sin complicaciones." name="description"/><meta content="#090a0d" name="theme-color"/><meta content="website" property="og:type"/><meta content="es_HN" property="og:locale"/><meta content="Impulse Landing | Estudio Digital" property="og:title"/><meta content="Tu idea merece un lugar en lo digital. Landing pages, identidad de marca y presencia digital." property="og:description"/><meta content="https://impulselanding.com/" property="og:url"/><meta content="https://impulselanding.com/assets/images/og-image.jpg" property="og:image"/><meta content="summary_large_image" name="twitter:card"/><meta content="Impulse Landing | Estudio Digital" name="twitter:title"/><meta content="Landing pages, identidad de marca y presencia digital." name="twitter:description"/><meta content="https://impulselanding.com/assets/images/og-image.jpg" name="twitter:image"/><link href="https://impulselanding.com/" rel="canonical"/><link href="favicon.png" rel="icon" type="image/png"/><link href="css/style.css" rel="stylesheet"/></head>
 <body><a class="skip-link" href="#main-content">Saltar al contenido</a>
@@ -23,25 +23,21 @@
 <span>Estudio digital · Honduras / Remoto</span>
 <span>Estudio digital · 2026</span>
 </div>
-<button aria-label="Activar núcleo de impulso" aria-pressed="false" class="hero-core" id="impulseCore" type="button">
-<span aria-hidden="true" class="core-aura"></span>
-<span aria-hidden="true" class="core-ring core-ring-one"></span>
-<span aria-hidden="true" class="core-ring core-ring-two"></span>
-<span aria-hidden="true" class="core-orb"><span class="core-center"></span></span>
-</button>
-<div aria-hidden="true" class="trajectory">
-<svg viewbox="0 0 700 420">
-<defs>
-<lineargradient id="grad" x1="0" x2="1">
-<stop offset="0%" stop-color="#1f4cff"></stop>
-<stop offset="35%" stop-color="#7b35ff"></stop>
-<stop offset="72%" stop-color="#ff4d21"></stop>
-<stop offset="100%" stop-color="#ffc21c"></stop>
-</lineargradient>
-</defs>
-<path class="trajectory-base" d="M45 350 C130 270, 115 125, 265 125 C410 125, 390 260, 520 245 C600 235, 625 160, 655 85"></path>
-<path class="trajectory-energy" d="M45 350 C130 270, 115 125, 265 125 C410 125, 390 260, 520 245 C600 235, 625 160, 655 85"></path>
-</svg>
+<div aria-hidden="true" class="shooting-stars">
+<span class="shooting-star" style="--x:8%;--delay:-1.4s;--duration:5.4s;--drift:7vw;--size:3px;--trail:82px;--tilt:-7deg"></span>
+<span class="shooting-star" style="--x:17%;--delay:-4.1s;--duration:6.2s;--drift:-5vw;--size:2px;--trail:58px;--tilt:5deg"></span>
+<span class="shooting-star" style="--x:27%;--delay:-2.7s;--duration:4.8s;--drift:4vw;--size:4px;--trail:106px;--tilt:-4deg"></span>
+<span class="shooting-star" style="--x:36%;--delay:-5.8s;--duration:6.7s;--drift:8vw;--size:2px;--trail:66px;--tilt:-8deg"></span>
+<span class="shooting-star" style="--x:45%;--delay:-.6s;--duration:5.9s;--drift:-7vw;--size:3px;--trail:92px;--tilt:7deg"></span>
+<span class="shooting-star" style="--x:54%;--delay:-3.5s;--duration:5.1s;--drift:5vw;--size:2px;--trail:62px;--tilt:-5deg"></span>
+<span class="shooting-star" style="--x:62%;--delay:-6.4s;--duration:7.1s;--drift:-4vw;--size:4px;--trail:112px;--tilt:4deg"></span>
+<span class="shooting-star" style="--x:70%;--delay:-2.1s;--duration:5.6s;--drift:7vw;--size:3px;--trail:78px;--tilt:-7deg"></span>
+<span class="shooting-star" style="--x:78%;--delay:-4.9s;--duration:6.4s;--drift:-6vw;--size:2px;--trail:70px;--tilt:6deg"></span>
+<span class="shooting-star" style="--x:86%;--delay:-1.8s;--duration:5.2s;--drift:4vw;--size:3px;--trail:96px;--tilt:-4deg"></span>
+<span class="shooting-star" style="--x:93%;--delay:-5.3s;--duration:6.9s;--drift:-8vw;--size:2px;--trail:62px;--tilt:8deg"></span>
+<span class="shooting-star" style="--x:22%;--delay:-7.1s;--duration:7.6s;--drift:9vw;--size:2px;--trail:54px;--tilt:-9deg"></span>
+<span class="shooting-star" style="--x:50%;--delay:-3.2s;--duration:7.3s;--drift:-5vw;--size:3px;--trail:84px;--tilt:5deg"></span>
+<span class="shooting-star" style="--x:73%;--delay:-6.8s;--duration:7.8s;--drift:6vw;--size:2px;--trail:58px;--tilt:-6deg"></span>
 </div>
 <h1 class="hero-title reveal">
       Tu idea merece<br/>
@@ -257,7 +253,7 @@
 <div class="final-v4-actions">
 <div class="cta-row">
 <a class="btn primary hoverable" href="https://impulse-brief.pages.dev/" rel="noopener noreferrer" target="_blank">Completar brief ↗</a>
-<a class="btn hoverable" href="https://wa.me/50431494347" target="_blank" rel="noopener noreferrer" title="Hablar por WhatsApp">Hablar por WhatsApp ↗️</a>
+<a aria-disabled="true" class="btn hoverable" href="#" id="whatsappLink" title="Agrega tu número de WhatsApp en js/script.js">Hablar por WhatsApp ↗</a>
 </div>
 </div>
 

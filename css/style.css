@@ -1515,3 +1515,78 @@
 .depth-carousel.is-dragging .depth-stage{transition:none}
 .depth-carousel.is-dragging .depth-card{pointer-events:none}
 .depth-card,.depth-open{cursor:pointer}
+
+/* V1.5 — responsive shooting-star rain through the hero headline */
+.shooting-stars{
+  position:absolute;
+  z-index:4;
+  top:7%;
+  bottom:13%;
+  left:2vw;
+  width:min(76vw,1180px);
+  overflow:hidden;
+  pointer-events:none;
+  contain:layout paint;
+  mix-blend-mode:screen;
+}
+.shooting-star{
+  --star-color:#ffffff;
+  position:absolute;
+  top:-18%;
+  left:var(--x);
+  width:var(--size);
+  height:var(--size);
+  border-radius:50%;
+  background:var(--star-color);
+  opacity:0;
+  box-shadow:
+    0 0 8px var(--star-color),
+    0 0 20px var(--star-color),
+    0 0 38px rgba(132,92,255,.68);
+  animation:shootingStarFall var(--duration) var(--delay) linear infinite;
+  will-change:transform,opacity;
+}
+.shooting-star::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:50%;
+  width:2px;
+  height:var(--trail);
+  transform:translateX(-50%) rotate(var(--tilt));
+  transform-origin:bottom center;
+  background:linear-gradient(to top,var(--star-color) 0 5%,rgba(255,255,255,.84) 18%,rgba(157,123,255,.48) 46%,transparent 100%);
+  filter:drop-shadow(0 0 6px var(--star-color));
+}
+.shooting-star::after{
+  content:"";
+  position:absolute;
+  inset:-4px;
+  border-radius:50%;
+  background:radial-gradient(circle,var(--star-color) 0 16%,rgba(255,255,255,.68) 18%,transparent 66%);
+}
+.shooting-star:nth-child(3n+1){--star-color:#ffffff}
+.shooting-star:nth-child(3n+2){--star-color:#9f8cff}
+.shooting-star:nth-child(3n){--star-color:#ffb36a}
+
+@keyframes shootingStarFall{
+  0%{transform:translate3d(0,-12vh,0) scale(.55);opacity:0}
+  8%{opacity:1}
+  62%{opacity:.92}
+  84%{opacity:.42}
+  100%{transform:translate3d(var(--drift),112vh,0) scale(.28);opacity:0}
+}
+
+@media(max-width:1024px){
+  .shooting-stars{top:8%;bottom:14%;left:1vw;width:90vw}
+  .shooting-star:nth-child(n+12){display:none}
+  .shooting-star::before{transform:translateX(-50%) rotate(var(--tilt)) scaleY(.82)}
+}
+@media(max-width:680px){
+  .shooting-stars{top:10%;bottom:16%;left:0;width:100%}
+  .shooting-star:nth-child(n+9){display:none}
+  .shooting-star::before{transform:translateX(-50%) rotate(var(--tilt)) scaleY(.62)}
+}
+@media(prefers-reduced-motion:reduce){
+  .shooting-stars{display:none}
+}

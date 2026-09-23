@@ -148,27 +148,6 @@ setupWhatsApp();
   renderDepth();
 
 
-  // Hero impulse core — release energy through the trajectory on activation.
-  const hero = document.querySelector('.hero');
-  const impulseCore = document.getElementById('impulseCore');
-  let impulseTimer = null;
-
-  impulseCore?.addEventListener('click', ()=>{
-    hero?.classList.remove('is-impulsing');
-    void hero?.offsetWidth;
-    hero?.classList.add('is-impulsing');
-    impulseCore.setAttribute('aria-pressed','true');
-    impulseCore.setAttribute('aria-label','Núcleo activado. Volver a impulsar');
-
-    clearTimeout(impulseTimer);
-    impulseTimer = setTimeout(()=>{
-      hero?.classList.remove('is-impulsing');
-      impulseCore.setAttribute('aria-pressed','false');
-      impulseCore.setAttribute('aria-label','Activar núcleo de impulso');
-    },1500);
-  });
-
-
   const io = new IntersectionObserver(entries=>{
     entries.forEach(en=>{
       if(en.isIntersecting) en.target.classList.add('in');
