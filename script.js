@@ -1,26 +1,33 @@
 // Production config
 const SITE_CONFIG = {
-  whatsappNumber: "", // TODO: agrega número en formato internacional, ej. 50499999999
-  whatsappMessage: "Hola, vi Impulse Landing y quiero conversar sobre mi proyecto."
+  whatsappNumber: "50431494347",
+  whatsappMessage:
+    "Hola, vi Impulse Landing y quiero conversar sobre mi proyecto."
 };
 
-function setupWhatsApp(){
-  const link = document.getElementById("https://api.whatsapp.com/send/?phone=%2B50431494347&text&type=phone_number&app_absent=0");
-  if(!link) return;
+function setupWhatsApp() {
+  const link = document.getElementById("whatsappLink");
+  if (!link) return;
 
   const number = SITE_CONFIG.whatsappNumber.replace(/\D/g, "");
-  if(!number){
-    link.setAttribute("aria-disabled","true");
-    link.addEventListener("click", (e) => e.preventDefault());
+
+  if (!number) {
+    link.setAttribute("aria-disabled", "true");
+    link.addEventListener("click", (event) => event.preventDefault());
     return;
   }
 
-  link.href = `https://wa.me/${number}?text=${encodeURIComponent(SITE_CONFIG.whatsappMessage)}`;
+  link.href =
+    `https://wa.me/${number}?text=${encodeURIComponent(
+      SITE_CONFIG.whatsappMessage
+    )}`;
+
   link.removeAttribute("aria-disabled");
   link.removeAttribute("title");
   link.target = "_blank";
   link.rel = "noopener noreferrer";
 }
+
 setupWhatsApp();
 
 
