@@ -1,4 +1,27 @@
-# Impulse Landing — Production
+# Impulse Landing — V1.3
+
+V1 conserva el código original y oficial. V1.3 continúa sobre V1.2.
+
+## Cambios en V1.3
+
+- La bombilla fue sustituida por un núcleo de impulso abstracto e interactivo.
+- Al activarlo, una onda expansiva sale de la esfera y un destello recorre la trayectoria del hero.
+- Se conservaron todos los cambios y enlaces de V1.2.
+
+## Cambios en V1.2
+
+- El foco del hero ahora es únicamente una bombilla interactiva.
+- Cualquier tarjeta de proyecto abre directamente su sitio y el botón vuelve a ser solo el icono de salida.
+- Los títulos de la sección 03 tienen una iluminación móvil y sutil.
+- El título de la sección 02 es más grande y se eliminó la explicación del carrusel.
+- El footer incluye iconos enlazados de Instagram y X.
+
+## Cambios en V1.1
+
+- Se corrigió el recorte de letras en titulares grandes.
+- Los Tetris del hero fueron sustituidos por un foco interactivo.
+- Los cuatro proyectos muestran un enlace claro y la tarjeta activa también abre el sitio.
+- La sección 06 se compactó para caber en una pantalla de escritorio y el titular ahora aprovecha mejor el ancho.
 
 Proyecto estático preparado para GitHub + Cloudflare Pages.
 

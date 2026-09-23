@@ -3,15 +3,16 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="V1.3" name="version"/>
 <title>Impulse Landing | Landing Pages, Identidad y Presencia Digital</title>
-<meta content="Diseñamos landing pages, identidades de marca y presencia digital para negocios que quieren verse profesionales y avanzar sin complicaciones." name="description"/><meta content="#090a0d" name="theme-color"/><meta content="website" property="og:type"/><meta content="es_HN" property="og:locale"/><meta content="Impulse Landing | Estudio Digital" property="og:title"/><meta content="Tu idea merece un lugar en lo digital. Landing pages, identidad de marca y presencia digital." property="og:description"/><meta content="https://impulselanding.com/" property="og:url"/><meta content="https://impulselanding.com/assets/images/og-image.jpg" property="og:image"/><meta content="summary_large_image" name="twitter:card"/><meta content="Impulse Landing | Estudio Digital" name="twitter:title"/><meta content="Landing pages, identidad de marca y presencia digital." name="twitter:description"/><meta content="https://impulselanding.com/assets/images/og-image.jpg" name="twitter:image"/><link href="https://impulselanding.com/" rel="canonical"/><link href="favicon.png" rel="icon" type="image/png"/><link href="style.css" rel="stylesheet"/></head>
+<meta content="Diseñamos landing pages, identidades de marca y presencia digital para negocios que quieren verse profesionales y avanzar sin complicaciones." name="description"/><meta content="#090a0d" name="theme-color"/><meta content="website" property="og:type"/><meta content="es_HN" property="og:locale"/><meta content="Impulse Landing | Estudio Digital" property="og:title"/><meta content="Tu idea merece un lugar en lo digital. Landing pages, identidad de marca y presencia digital." property="og:description"/><meta content="https://impulselanding.com/" property="og:url"/><meta content="https://impulselanding.com/assets/images/og-image.jpg" property="og:image"/><meta content="summary_large_image" name="twitter:card"/><meta content="Impulse Landing | Estudio Digital" name="twitter:title"/><meta content="Landing pages, identidad de marca y presencia digital." name="twitter:description"/><meta content="https://impulselanding.com/assets/images/og-image.jpg" name="twitter:image"/><link href="https://impulselanding.com/" rel="canonical"/><link href="favicon.png" rel="icon" type="image/png"/><link href="css/style.css" rel="stylesheet"/></head>
 <body><a class="skip-link" href="#main-content">Saltar al contenido</a>
 <div class="page" id="main-content" role="main">
 <div class="noise"></div>
 <div class="progress"></div>
 <div class="cursor"></div>
 <nav class="nav">
-<a class="brand" href="#top"><span class="brand-mark"><img alt="Impulse logo" fetchpriority="high" src="impulse-landing.webp"/></span><span>IMPULSE®</span></a>
+<a class="brand" href="#top"><span class="brand-mark"><img alt="Impulse logo" fetchpriority="high" src="assets/images/impulse-landing.webp"/></span><span>IMPULSE®</span></a>
 <div class="navlinks">
 <a href="#work">Work</a>
 <a href="#services">Studio</a>
@@ -23,23 +24,12 @@
 <span>Estudio digital · Honduras / Remoto</span>
 <span>Estudio digital · 2026</span>
 </div>
-<div aria-hidden="true" class="hero-tetris">
-<div class="tetri t1 shape-L" data-drift="12" style="--rot:-12deg; --scale:1;">
-<span class="cell c1"></span><span class="cell c2"></span><span class="cell c3"></span><span class="cell c4"></span>
-</div>
-<div class="tetri t2 shape-T" data-drift="22" style="--rot:14deg; --scale:.96;">
-<span class="cell c1"></span><span class="cell c2"></span><span class="cell c3"></span><span class="cell c4"></span>
-</div>
-<div class="tetri t3 shape-Z" data-drift="17" style="--rot:8deg; --scale:.88;">
-<span class="cell c1"></span><span class="cell c2"></span><span class="cell c3"></span><span class="cell c4"></span>
-</div>
-<div class="tetri t4 shape-SQ" data-drift="20" style="--rot:-10deg; --scale:1.02;">
-<span class="cell c1"></span><span class="cell c2"></span><span class="cell c3"></span><span class="cell c4"></span>
-</div>
-<div class="tetri t5 shape-I" data-drift="28" style="--rot:18deg; --scale:.74;">
-<span class="cell c1"></span><span class="cell c2"></span><span class="cell c3"></span><span class="cell c4"></span>
-</div>
-</div>
+<button aria-label="Activar núcleo de impulso" aria-pressed="false" class="hero-core" id="impulseCore" type="button">
+<span aria-hidden="true" class="core-aura"></span>
+<span aria-hidden="true" class="core-ring core-ring-one"></span>
+<span aria-hidden="true" class="core-ring core-ring-two"></span>
+<span aria-hidden="true" class="core-orb"><span class="core-center"></span></span>
+</button>
 <div aria-hidden="true" class="trajectory">
 <svg viewbox="0 0 700 420">
 <defs>
@@ -50,7 +40,8 @@
 <stop offset="100%" stop-color="#ffc21c"></stop>
 </lineargradient>
 </defs>
-<path d="M45 350 C130 270, 115 125, 265 125 C410 125, 390 260, 520 245 C600 235, 625 160, 655 85"></path>
+<path class="trajectory-base" d="M45 350 C130 270, 115 125, 265 125 C410 125, 390 260, 520 245 C600 235, 625 160, 655 85"></path>
+<path class="trajectory-energy" d="M45 350 C130 270, 115 125, 265 125 C410 125, 390 260, 520 245 C600 235, 625 160, 655 85"></path>
 </svg>
 </div>
 <h1 class="hero-title reveal">
@@ -84,73 +75,71 @@
 <div class="section-kicker">02 — Selected Work</div>
 <h2 class="section-title reveal">Ideas que ya<br/>tomaron impulso.</h2>
 </div>
-<div class="section-meta">Carrusel 3D / Depth<br/>Arrastra o usa las flechas</div>
 </div>
 <div class="depth-carousel reveal" id="depthCarousel">
-<div class="depth-hint">Drag / Swipe ↔</div>
 <div class="depth-stage">
-<article class="depth-card super hoverable" data-index="0" tabindex="0">
+<a aria-label="Visitar Superhorchatas" class="depth-card super hoverable" data-index="0" href="https://superhorchatas.com/">
 <div class="depth-card-inner">
 <div class="depth-card-top">
 <span class="depth-num">01 / 04</span>
 <span class="depth-type">Branding · Web · 2026</span>
 </div>
 <div class="depth-logo-wrap">
-<img alt="Superhorchatas" class="depth-logo" decoding="async" loading="lazy" src="superhorchatas.webp"/>
+<img alt="Superhorchatas" class="depth-logo" decoding="async" loading="lazy" src="assets/images/superhorchatas.webp"/>
 </div>
 <div class="depth-bottom">
 <div>
 <h3 class="depth-title">SUPER<br/>HORCHATAS</h3>
 <div class="depth-meta">Identidad + Landing Page</div>
 </div>
-<a aria-label="Abrir Superhorchatas" class="depth-open project-link" href="https://superhorchatas.com/" rel="noopener noreferrer" target="_blank">↗</a>
+<span aria-hidden="true" class="depth-open">↗</span>
 </div>
 </div>
-</article>
-<article class="depth-card galletalis hoverable" data-index="1" tabindex="0">
+</a>
+<a aria-label="Visitar Galletalis" class="depth-card galletalis hoverable" data-index="1" href="https://galletalis.com/">
 <div class="depth-card-inner">
 <div class="depth-card-top">
 <span class="depth-num">02 / 04</span>
 <span class="depth-type">Identidad · Web · 2026</span>
 </div>
 <div class="depth-logo-wrap">
-<img alt="Galletalis" class="depth-logo" decoding="async" loading="lazy" src="galletalis.webp"/>
+<img alt="Galletalis" class="depth-logo" decoding="async" loading="lazy" src="assets/images/galletalis.webp"/>
 </div>
 <div class="depth-bottom">
 <div>
 <h3 class="depth-title">GALLETALIS</h3>
 <div class="depth-meta">Brand system + Web</div>
 </div>
-<a aria-label="Abrir Galletalis" class="depth-open project-link" href="https://galletalis.com/" rel="noopener noreferrer" target="_blank">↗</a>
+<span aria-hidden="true" class="depth-open">↗</span>
 </div>
 </div>
-</article>
-<article class="depth-card leemi hoverable" data-index="2" tabindex="0">
+</a>
+<a aria-label="Visitar Lee Mi Carta — proyecto en proceso" class="depth-card leemi hoverable" data-index="2" href="https://testing-sites.kevinramiro.workers.dev/">
 <div class="depth-card-inner">
 <div class="depth-card-top">
 <span class="depth-num">03 / 04</span>
 <span class="depth-type">Producto digital · En proceso</span>
 </div>
 <div class="depth-logo-wrap">
-<img alt="Lee Mi Carta" class="depth-logo" decoding="async" loading="lazy" src="lee-mi-carta.webp"/>
+<img alt="Lee Mi Carta" class="depth-logo" decoding="async" loading="lazy" src="assets/images/lee-mi-carta.webp"/>
 </div>
 <div class="depth-bottom">
 <div>
 <h3 class="depth-title">LEE MI CARTA</h3>
 <div class="depth-meta">Experiencia digital</div>
 </div>
-<a aria-label="Abrir Lee Mi Carta — proyecto en proceso" class="depth-open project-link" href="https://testing-sites.kevinramiro.workers.dev/" rel="noopener noreferrer" target="_blank">↗</a>
+<span aria-hidden="true" class="depth-open">↗</span>
 </div>
 </div>
-</article>
-<article class="depth-card impulse hoverable" data-index="3" tabindex="0">
+</a>
+<a aria-label="Visitar Impulse Landing" class="depth-card impulse hoverable" data-index="3" href="https://impulselanding.com/">
 <div class="depth-card-inner">
 <div class="depth-card-top">
 <span class="depth-num">04 / 04</span>
 <span class="depth-type">Nuestra marca · 2026</span>
 </div>
 <div class="depth-logo-wrap">
-<img alt="Impulse Landing" class="depth-logo" decoding="async" loading="lazy" src="impulse-landing.webp"/>
+<img alt="Impulse Landing" class="depth-logo" decoding="async" loading="lazy" src="assets/images/impulse-landing.webp"/>
 
 </div>
 <div class="depth-bottom">
@@ -158,10 +147,10 @@
 <h3 class="depth-title">IMPULSE LANDING</h3>
 <div class="depth-meta">Estás aquí</div>
 </div>
-<a aria-label="Abrir Impulse Landing" class="depth-open project-link" href="https://impulselanding.com/" rel="noopener noreferrer" target="_blank">↗</a>
+<span aria-hidden="true" class="depth-open">↗</span>
 </div>
 </div>
-</article>
+</a>
 </div>
 <div class="depth-controls">
 <div class="depth-arrows">
@@ -275,6 +264,7 @@
 
 </div>
 </section>
-<footer class="site-footer"><div class="footer-meta"><span>IMPULSE LANDING® — 2026</span><a aria-label="Impulse Landing en Instagram" href="https://instagram.com/impulselanding" rel="noopener noreferrer" target="_blank">@impulselanding ↗</a></div><a aria-label="Impulse Landing" class="footer-powered" href="https://impulselanding.com/"><img alt="Powered by Impulse Landing" decoding="async" loading="lazy" src="powered-by-impulse-landing.webp"/>
-<script defer src="script.js"></script>
+<footer class="site-footer"><div class="footer-meta"><span>IMPULSE LANDING® — 2026</span><div class="footer-social"><a aria-label="Impulse Landing en Instagram" href="https://instagram.com/impulselanding" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" viewbox="0 0 24 24"><rect height="18" rx="5" width="18" x="3" y="3"></rect><circle cx="12" cy="12" r="4.2"></circle><circle class="social-dot" cx="17.4" cy="6.7" r="1"></circle></svg></a><a aria-label="Impulse Landing en X" href="https://x.com/impulselanding" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M4 4l12.6 16H20L7.4 4H4Zm14.2 0L4 20h1.8L20 4h-1.8Z"></path></svg></a></div></div><a aria-label="Impulse Landing" class="footer-powered" href="https://impulselanding.com/"><img alt="Powered by Impulse Landing" decoding="async" loading="lazy" src="assets/images/powered-by-impulse-landing.webp"/></a></footer>
+</div>
+<script defer="" src="js/script.js"></script></body>
 </html>
