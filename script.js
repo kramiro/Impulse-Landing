@@ -1,223 +1,418 @@
-// Production config
+// ======================================================
+// IMPULSE LANDING — PRODUCTION SCRIPT
+// ======================================================
+
 const SITE_CONFIG = {
   whatsappNumber: "50431494347",
   whatsappMessage:
     "Hola, vi Impulse Landing y quiero conversar sobre mi proyecto."
 };
 
+
+// ======================================================
+// WHATSAPP
+// ======================================================
+
 function setupWhatsApp() {
   const link = document.getElementById("whatsappLink");
+
   if (!link) return;
 
-  const number = SITE_CONFIG.whatsappNumber.replace(/\D/g, "");
+  const number = String(SITE_CONFIG.whatsappNumber || "").replace(/\D/g, "");
 
   if (!number) {
+    link.href = "#";
     link.setAttribute("aria-disabled", "true");
-    link.addEventListener("click", (event) => event.preventDefault());
     return;
   }
 
-  link.href =
-    `https://wa.me/${number}?text=${encodeURIComponent(
-      SITE_CONFIG.whatsappMessage
-    )}`;
+  const message = encodeURIComponent(SITE_CONFIG.whatsappMessage);
+
+  link.href = `https://wa.me/${number}?text=${message}`;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
 
   link.removeAttribute("aria-disabled");
   link.removeAttribute("title");
-  link.target = "_blank";
-  link.rel = "noopener noreferrer";
 }
 
-setupWhatsApp();
+
+// ======================================================
+// INICIALIZACIÓN GENERAL
+// ======================================================
+
+function initializeSite() {
+  setupWhatsApp();
+
+  const progress = document.querySelector(".progress");
+  const process = document.querySelector(".process");
+  const processFill = document.querySelector(".process-fill");
+  const digital = document.querySelector(".digital");
 
 
+  // ====================================================
+  // PROGRESO DE LA PÁGINA Y SECCIÓN DE PROCESO
+  // ====================================================
 
+  function updateScrollEffects() {
+    const scrollableHeight =
+      document.documentElement.scrollHeight - window.innerHeight;
 
-  const progress = document.querySelector('.progress');
-  const cursor = document.querySelector('.cursor');
-  const process = document.querySelector('.process');
-  const processFill = document.querySelector('.process-fill');
-  const digital = document.querySelector('.digital');
+    const scrollProgress =
+      scrollableHeight > 0
+        ? (window.scrollY / scrollableHeight) * 100
+        : 0;
 
-  window.addEventListener('scroll',()=>{
-    const h = document.documentElement.scrollHeight - innerHeight;
-    const p = h > 0 ? (scrollY/h)*100 : 0;
-    progress.style.width = p + '%';
+    if (progress) {
+      progress.style.width = `${scrollProgress}%`;
+    }
 
-    const r = process.getBoundingClientRect();
-    const vh = innerHeight;
-    let t = (vh - r.top) / (r.height + vh*.25);
-    t = Math.max(0, Math.min(1, t));
-    if (innerWidth > 700) processFill.style.width = (t*100)+'%';
-    else processFill.style.height = (t*100)+'%';
+    if (process && processFill) {
+      const rect = process.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+
+      let amount =
+        (viewportHeight - rect.top) /
+        (rect.height + viewportHeight * 0.25);
+
+      amount = Math.max(0, Math.min(1, amount));
+
+      if (window.innerWidth > 700) {
+        processFill.style.width = `${amount * 100}%`;
+        processFill.style.height = "";
+      } else {
+        processFill.style.height = `${amount * 100}%`;
+        processFill.style.width = "";
+      }
+    }
+  }
+
+  window.addEventListener("scroll", updateScrollEffects, {
+    passive: true
   });
 
-  document.addEventListener('mousemove',e=>{
-    cursor.style.left = e.clientX+'px';
-    cursor.style.top = e.clientY+'px';
+  window.addEventListener("resize", updateScrollEffects);
 
-    const r = digital.getBoundingClientRect();
-    const x = ((e.clientX-r.left)/r.width)*100;
-    const y = ((e.clientY-r.top)/r.height)*100;
-    digital.style.setProperty('--mx', x+'%');
-    digital.style.setProperty('--my', y+'%');
+  updateScrollEffects();
+
+
+  // ====================================================
+  // ILUMINACIÓN INTERACTIVA
+  // ====================================================
+
+  document.addEventListener("mousemove", (event) => {
+    if (!digital) return;
+
+    const rect = digital.getBoundingClientRect();
+
+    if (!rect.width || !rect.height) return;
+
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+
+    digital.style.setProperty("--mx", `${x}%`);
+    digital.style.setProperty("--my", `${y}%`);
   });
 
-  document.querySelectorAll('.hoverable').forEach(el=>{
-    el.addEventListener('mouseenter',()=>{
-      cursor.classList.add('active');
-      cursor.textContent='VIEW';
-    });
-    el.addEventListener('mouseleave',()=>{
-      cursor.classList.remove('active');
-      cursor.textContent='';
-    });
-  });
 
+  // ====================================================
+  // SELECTED WORK — CARRUSEL
+  // ====================================================
 
-  // Selected Work — 3D / Depth carousel
-  const depthCards = [...document.querySelectorAll('.depth-card')];
-  const depthDots = [...document.querySelectorAll('.depth-dot')];
-  const depthCurrent = document.getElementById('depthCurrent');
-  const depthCarousel = document.getElementById('depthCarousel');
+  const depthCards = [
+    ...document.querySelectorAll(".depth-card")
+  ];
+
+  const depthDots = [
+    ...document.querySelectorAll(".depth-dot")
+  ];
+
+  const depthCurrent = document.getElementById("depthCurrent");
+  const depthCarousel = document.getElementById("depthCarousel");
+  const depthStage = document.querySelector(".depth-stage");
+
   let depthIndex = 0;
   let dragStartX = null;
+  let dragPointerId = null;
+  let isDragging = false;
+  let suppressCardClick = false;
 
-  function circularDelta(i, active, total){
-    let d = i - active;
-    if (d > total / 2) d -= total;
-    if (d < -total / 2) d += total;
-    return d;
+
+  function circularDelta(index, activeIndex, total) {
+    let difference = index - activeIndex;
+
+    if (difference > total / 2) {
+      difference -= total;
+    }
+
+    if (difference < -total / 2) {
+      difference += total;
+    }
+
+    return difference;
   }
 
-  function renderDepth(){
+
+  function renderDepth() {
     const total = depthCards.length;
-    depthCards.forEach((card, i)=>{
-      const d = circularDelta(i, depthIndex, total);
-      const abs = Math.abs(d);
-      const sign = d === 0 ? 0 : (d > 0 ? 1 : -1);
-      card.style.setProperty('--offset', d);
-      card.style.setProperty('--abs', abs);
-      card.style.setProperty('--sign', sign);
-      card.dataset.distance = Math.min(abs, 2);
-      card.setAttribute('aria-current', d === 0 ? 'true' : 'false');
+
+    if (!total) return;
+
+    depthCards.forEach((card, index) => {
+      const difference = circularDelta(
+        index,
+        depthIndex,
+        total
+      );
+
+      const absoluteDifference = Math.abs(difference);
+
+      const direction =
+        difference === 0
+          ? 0
+          : difference > 0
+            ? 1
+            : -1;
+
+      card.style.setProperty("--offset", difference);
+      card.style.setProperty("--abs", absoluteDifference);
+      card.style.setProperty("--sign", direction);
+
+      card.dataset.distance = String(
+        Math.min(absoluteDifference, 2)
+      );
+
+      card.setAttribute(
+        "aria-current",
+        difference === 0 ? "true" : "false"
+      );
     });
-    depthDots.forEach((dot,i)=>dot.classList.toggle('active', i === depthIndex));
-    if(depthCurrent) depthCurrent.textContent = String(depthIndex + 1).padStart(2,'0');
+
+    depthDots.forEach((dot, index) => {
+      dot.classList.toggle("active", index === depthIndex);
+    });
+
+    if (depthCurrent) {
+      depthCurrent.textContent = String(depthIndex + 1).padStart(
+        2,
+        "0"
+      );
+    }
   }
 
-  function goDepth(next){
-    depthIndex = (next + depthCards.length) % depthCards.length;
+
+  function goDepth(nextIndex) {
+    if (!depthCards.length) return;
+
+    depthIndex =
+      (nextIndex + depthCards.length) % depthCards.length;
+
     renderDepth();
   }
 
-  document.getElementById('depthPrev')?.addEventListener('click',()=>goDepth(depthIndex - 1));
-  document.getElementById('depthNext')?.addEventListener('click',()=>goDepth(depthIndex + 1));
-  depthDots.forEach(dot=>dot.addEventListener('click',()=>goDepth(Number(dot.dataset.go))));
-  depthCards.forEach((card,i)=>{
-    card.addEventListener('click',(e)=>{
-      if(e.target.closest('a')) return;
-      if(i !== depthIndex) goDepth(i);
-    });
-    card.addEventListener('keydown',e=>{
-      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); goDepth(i); }
+
+  const previousButton = document.getElementById("depthPrev");
+  const nextButton = document.getElementById("depthNext");
+
+  previousButton?.addEventListener("click", () => {
+    goDepth(depthIndex - 1);
+  });
+
+  nextButton?.addEventListener("click", () => {
+    goDepth(depthIndex + 1);
+  });
+
+
+  depthDots.forEach((dot) => {
+    dot.addEventListener("click", () => {
+      const destination = Number(dot.dataset.go);
+
+      if (Number.isFinite(destination)) {
+        goDepth(destination);
+      }
     });
   });
 
-  depthCarousel?.addEventListener('pointerdown',e=>{
-    dragStartX = e.clientX;
-    depthCarousel.setPointerCapture?.(e.pointerId);
+
+  // Permite abrir las tarjetas normalmente, pero evita
+  // abrir el enlace accidentalmente después de arrastrar.
+
+  depthCards.forEach((card) => {
+    card.addEventListener("dragstart", (event) => {
+      event.preventDefault();
+    });
+
+    card.addEventListener(
+      "click",
+      (event) => {
+        if (!suppressCardClick) return;
+
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        suppressCardClick = false;
+      },
+      true
+    );
   });
-  depthCarousel?.addEventListener('pointerup',e=>{
-    if(dragStartX === null) return;
-    const dx = e.clientX - dragStartX;
-    if(Math.abs(dx) > 55) goDepth(depthIndex + (dx < 0 ? 1 : -1));
+
+
+  function finishDepthDrag(event, cancelled = false) {
+    if (dragStartX === null) return;
+
+    if (
+      dragPointerId !== null &&
+      event.pointerId !== dragPointerId
+    ) {
+      return;
+    }
+
+    const movementX = event.clientX - dragStartX;
+
+    const shouldChangeCard =
+      !cancelled &&
+      isDragging &&
+      Math.abs(movementX) > 42;
+
+    if (shouldChangeCard) {
+      suppressCardClick = true;
+
+      goDepth(
+        depthIndex + (movementX < 0 ? 1 : -1)
+      );
+
+      window.setTimeout(() => {
+        suppressCardClick = false;
+      }, 100);
+    }
+
+    depthCarousel?.classList.remove("is-dragging");
+
+    if (depthStage) {
+      depthStage.style.transform = "";
+    }
+
     dragStartX = null;
+    dragPointerId = null;
+    isDragging = false;
+  }
+
+
+  depthCarousel?.addEventListener("pointerdown", (event) => {
+    if (event.target.closest("button")) return;
+
+    dragStartX = event.clientX;
+    dragPointerId = event.pointerId;
+    isDragging = false;
   });
-  depthCarousel?.addEventListener('pointercancel',()=>dragStartX=null);
+
+
+  depthCarousel?.addEventListener("pointermove", (event) => {
+    if (
+      dragStartX === null ||
+      event.pointerId !== dragPointerId
+    ) {
+      return;
+    }
+
+    const movementX = event.clientX - dragStartX;
+
+    if (Math.abs(movementX) > 7) {
+      if (!isDragging) {
+        depthCarousel.setPointerCapture?.(
+          event.pointerId
+        );
+      }
+
+      isDragging = true;
+
+      depthCarousel.classList.add("is-dragging");
+
+      if (depthStage) {
+        depthStage.style.transform =
+          `translateX(${movementX * 0.2}px)`;
+      }
+
+      event.preventDefault();
+    }
+  });
+
+
+  depthCarousel?.addEventListener("pointerup", (event) => {
+    finishDepthDrag(event);
+  });
+
+  depthCarousel?.addEventListener("pointercancel", (event) => {
+    finishDepthDrag(event, true);
+  });
+
+
+  // Navegación con teclado
+
+  if (depthCarousel) {
+    depthCarousel.setAttribute("tabindex", "0");
+    depthCarousel.setAttribute(
+      "aria-label",
+      "Proyectos seleccionados"
+    );
+
+    depthCarousel.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        goDepth(depthIndex - 1);
+      }
+
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        goDepth(depthIndex + 1);
+      }
+    });
+  }
+
   renderDepth();
 
 
-  // Floating / draggable Tetris shapes in hero
-  const hero = document.querySelector('.hero');
-  const tetrisShapes = [...document.querySelectorAll('.tetri')];
-  let activeShape = null;
-  let shapeBounds = null;
-  let shapeOffsetX = 0;
-  let shapeOffsetY = 0;
+  // ====================================================
+  // ANIMACIONES AL ENTRAR EN PANTALLA
+  // ====================================================
 
-  function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+  const revealElements = document.querySelectorAll(".reveal");
 
-  hero?.addEventListener('mousemove', (e)=>{
-    const rect = hero.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    tetrisShapes.forEach((shape, i)=>{
-      if(shape === activeShape) return;
-      const drift = Number(shape.dataset.drift || 12);
-      const tx = x * drift;
-      const ty = y * drift * 0.75;
-      shape.style.translate = `${tx}px ${ty}px`;
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.14
+      }
+    );
+
+    revealElements.forEach((element) => {
+      observer.observe(element);
     });
-  });
-
-  hero?.addEventListener('mouseleave', ()=>{
-    tetrisShapes.forEach(shape=>{
-      if(shape === activeShape) return;
-      shape.style.translate = `0px 0px`;
+  } else {
+    revealElements.forEach((element) => {
+      element.classList.add("in");
     });
-  });
-
-  tetrisShapes.forEach(shape=>{
-    shape.addEventListener('pointerdown', (e)=>{
-      activeShape = shape;
-      shape.classList.add('dragging');
-      shape.setPointerCapture?.(e.pointerId);
-      const rect = shape.getBoundingClientRect();
-      shapeBounds = hero.getBoundingClientRect();
-      shapeOffsetX = e.clientX - rect.left;
-      shapeOffsetY = e.clientY - rect.top;
-      shape.style.transition = 'none';
-      e.preventDefault();
-    });
-    shape.addEventListener('pointermove', (e)=>{
-      if(activeShape !== shape || !shapeBounds) return;
-      const localX = clamp(e.clientX - shapeBounds.left - shapeOffsetX, 0, shapeBounds.width - shape.offsetWidth);
-      const localY = clamp(e.clientY - shapeBounds.top - shapeOffsetY, 0, shapeBounds.height - shape.offsetHeight);
-      shape.style.left = `${localX}px`;
-      shape.style.top = `${localY}px`;
-      shape.style.translate = '0 0';
-    });
-    const endDrag = ()=>{
-      if(activeShape !== shape) return;
-      shape.classList.remove('dragging');
-      shape.style.transition = '';
-      activeShape = null;
-      shapeBounds = null;
-    };
-    shape.addEventListener('pointerup', endDrag);
-    shape.addEventListener('pointercancel', endDrag);
-  });
-
-
-  const io = new IntersectionObserver(entries=>{
-    entries.forEach(en=>{
-      if(en.isIntersecting) en.target.classList.add('in');
-    })
-  },{threshold:.14});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-
-// Keyboard support for Selected Work
-depthCarousel?.setAttribute("tabindex","0");
-depthCarousel?.setAttribute("aria-label","Proyectos seleccionados");
-depthCarousel?.addEventListener("keydown",(e)=>{
-  if(e.key === "ArrowLeft"){
-    e.preventDefault();
-    goDepth(depthIndex - 1);
   }
-  if(e.key === "ArrowRight"){
-    e.preventDefault();
-    goDepth(depthIndex + 1);
-  }
-});
+}
 
+
+// ======================================================
+// EJECUTAR CUANDO EL HTML ESTÉ DISPONIBLE
+// ======================================================
+
+if (document.readyState === "loading") {
+  document.addEventListener(
+    "DOMContentLoaded",
+    initializeSite
+  );
+} else {
+  initializeSite();
+}
